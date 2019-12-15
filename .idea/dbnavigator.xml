@@ -23,7 +23,11 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes />
+    <loaded-nodes>
+      <connection connection-id="3fc836cf-aa87-4cad-82ab-10bbb3248c64">
+        <schema name="laravelvue" object-types="constraint, procedure, column, index, function, view, table, dataset trigger" />
+      </connection>
+    </loaded-nodes>
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="3fc836cf-aa87-4cad-82ab-10bbb3248c64">
