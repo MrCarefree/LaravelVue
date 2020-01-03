@@ -10,6 +10,16 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
+     * Create new controller instance
+     * 
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth:api');
+    }
+
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
@@ -27,7 +37,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+        $request->validate([
             'name' => 'required|string|max:191',
             'email' => 'required|string|email|max:191|unique:users',
             'password' => 'required|string|min:8|max:191'
@@ -54,6 +64,10 @@ class UserController extends Controller
         //
     }
 
+    public function profile(){
+        return auth('api')->user();
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -63,8 +77,14 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $request->validate([
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users, email,' . $user->id,
+            'password' => 'sometimes|string|min:8|max:191'
+        ]);
     }
+    
 
     /**
      * Remove the specified resource from storage.
@@ -74,6 +94,8 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return ['message' => 'File has been deleted'];
     }
 }

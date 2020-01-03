@@ -4,58 +4,90 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+require("./bootstrap");
 
-window.Vue = require('vue');
+window.Vue = require("vue");
 
-import { Form, HasError, AlertError } from 'vform'
+// import bootstrap 4 custom file input
+import bsCustomFileInput from 'bs-custom-file-input';
+window.bsCustomFileInput = bsCustomFileInput;
+
+// Import Form Validation Error form vform
+import { Form, HasError, AlertError } from "vform";
 window.Form = Form;
+// Regiter global component
 Vue.component(HasError.name, HasError);
 Vue.component(AlertError.name, AlertError);
 
-import VueRouter from 'vue-router'
+// Import vue-router and tell Vue to use it
+import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
+// Register component to the url
 let routes = [
-    { path: '/dashboard', component: require('./components/Dashboard.vue').default},
-    { path: '/profile', component: require('./components/Profile.vue').default},
-    { path: '/users', component: require('./components/Users.vue').default}
+    {
+        path: "/dashboard",
+        component: require("./components/Dashboard.vue").default
+    },
+    {
+        path: "/developer",
+        component: require("./components/Developer.vue").default
+    },
+    {
+        path: "/profile",
+        component: require("./components/Profile.vue").default
+    },
+    {
+        path: "/users",
+        component: require("./components/Users.vue").default
+    }
 ];
 
+// Set up the router
 const router = new VueRouter({
-    mode: 'history',
+    mode: "history",
     routes
 });
 
-import VueProgressBar from 'vue-progressbar'
+// Import vue-progressbar
+import VueProgressBar from "vue-progressbar";
+// Set up the progressbar
 Vue.use(VueProgressBar, {
-    color: 'rgb(143, 255, 199)',
-    failedColor: 'red',
-    height: '3px'
+    color: "rgb(143, 255, 199)",
+    failedColor: "red",
+    height: "3px"
 });
 
-Vue.filter('upText', function(text){
+// Create UpperCase text Filter
+Vue.filter("upText", function(text) {
     return text.toUpperCase();
 });
-Vue.filter('capitalized', function(text){
+// Create Capitalized text filter
+Vue.filter("capitalized", function(text) {
     return text.charAt(0).toUpperCase() + text.slice(1);
 });
 
-import moment from 'moment'
-Vue.filter('myDate', function(date){
-    return moment(date).format('MMMM Do YYYY');
+// Import moment for custom date
+import moment from "moment";
+// Create custom date filter
+Vue.filter("myDate", function(date) {
+    return moment(date).format("MMMM Do YYYY");
 });
 
-import Swal from 'sweetalert2'
+// Import Sweetalert2
+import Swal from "sweetalert2";
 window.Swal = Swal;
+// Set up swal toast
 const Toast = Swal.mixin({
     toast: true,
-    position: 'top-end',
+    position: "top-end",
     showConfirmButton: false,
     timer: 3000
 });
 window.Toast = Toast;
 
+// create global new Vue
+window.Fire = new Vue();
 
 /**
  * The following block of code may be used to automatically register your
@@ -68,7 +100,22 @@ window.Toast = Toast;
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component(
+    "passport-clients",
+    require("./components/passport/Clients.vue").default
+);
+Vue.component(
+    "passport-authorized-clients",
+    require("./components/passport/AuthorizedClients.vue").default
+);
+Vue.component(
+    "passport-personal-access-tokens",
+    require("./components/passport/PersonalAccessTokens.vue").default
+);
+Vue.component(
+    "example-component",
+    require("./components/ExampleComponent.vue").default
+);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -77,6 +124,6 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  */
 
 const app = new Vue({
-    el: '#app',
+    el: "#app",
     router
 });
