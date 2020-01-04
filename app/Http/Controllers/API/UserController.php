@@ -64,8 +64,34 @@ class UserController extends Controller
         //
     }
 
-    public function profile(){
+    public function profile()
+    {
         return auth('api')->user();
+    }
+
+    public function updateProfile(Request $request)
+    {
+        $user =  auth('api')->user();
+        $request->validate([
+            'name' => 'required|string|max:191',
+            'email' => 'required|string|email|max:191|unique:users,email,' . $user->id,
+            'password' => 'sometimes|string|min:8|max:191'
+        ]);
+
+        $currentPhoto = $user->photo;
+        if ($request->photo != $currentPhoto && !empty($request->photo)) {
+            $name = time() . '.' . explode('/', explode(':', substr($request->photo, 0, strpos($request->photo, ';')))[1])[1];
+            \Image::make($request->photo)->save(public_path('img/profile/') . $name);
+
+            $request->merge(['photo' => $name]);
+        }
+
+        if(!empty($request->password)){
+            $request->merge(['password' => Hash::make($request['password'])]);
+        }
+
+        $user->update($request->all());
+        return ['message' => 'Success'];
     }
 
     /**
@@ -80,11 +106,14 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $request->validate([
             'name' => 'required|string|max:191',
-            'email' => 'required|string|email|max:191|unique:users, email,' . $user->id,
+            'email' => 'required|string|email|max:191|unique:users,email,' . $user->id,
             'password' => 'sometimes|string|min:8|max:191'
         ]);
+
+        $user->update($request->all());
+        return ['message' => 'Updated user info'];
     }
-    
+
 
     /**
      * Remove the specified resource from storage.

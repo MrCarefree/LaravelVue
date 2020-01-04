@@ -2148,6 +2148,116 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2169,20 +2279,40 @@ __webpack_require__.r(__webpack_exports__);
       var file = e.target.files[0];
       var reader = new FileReader();
 
-      reader.onloadend = function (file) {
-        console.log(reader);
-        _this.form.photo = reader.result;
-      };
+      if (file["size"] < 2111775) {
+        bsCustomFileInput.init();
+
+        reader.onloadend = function (file) {
+          _this.form.photo = reader.result;
+        };
+
+        reader.readAsDataURL(file);
+      } else {
+        bsCustomFileInput.destroy();
+        this.form.photo = "";
+        Toast.fire({
+          icon: "warning",
+          title: "Can't Upload Bigger Than 2MB"
+        });
+      }
+    },
+    updateProfile: function updateProfile() {
+      var _this2 = this;
+
+      this.$Progress.start();
+      this.form.put("api/profile").then(function () {
+        _this2.$Progress.finish();
+      })["catch"](function () {
+        _this2.$Progress.fail();
+      });
     }
   },
   mounted: function mounted() {
-    var _this2 = this;
+    var _this3 = this;
 
-    console.log("Component mounted.");
-    bsCustomFileInput.init();
     axios.get("api/profile").then(function (_ref) {
       var data = _ref.data;
-      return _this2.form.fill(data);
+      return _this3.form.fill(data);
     });
   }
 });
@@ -2198,6 +2328,70 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -61369,7 +61563,56 @@ var render = function() {
                       )
                     ]),
                     _vm._v(" "),
-                    _vm._m(3),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 col-form-label",
+                          attrs: { for: "experience" }
+                        },
+                        [_vm._v("Experience")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.bio,
+                                expression: "form.bio"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("password")
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "experience",
+                              placeholder: "Experience"
+                            },
+                            domProps: { value: _vm.form.bio },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(_vm.form, "bio", $event.target.value)
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "bio" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
                     _c(
                       "div",
@@ -61388,7 +61631,9 @@ var render = function() {
                           "div",
                           {
                             staticClass: "input-group col-sm-10",
-                            class: { "is-invalid": _vm.form.errors.has("name") }
+                            class: {
+                              "is-invalid": _vm.form.errors.has("name")
+                            }
                           },
                           [
                             _c("div", { staticClass: "custom-file" }, [
@@ -61421,9 +61666,84 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(4),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "label",
+                        {
+                          staticClass: "col-sm-2 col-form-label",
+                          attrs: { for: "password" }
+                        },
+                        [_vm._v("Password")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "col-sm-10" },
+                        [
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.form.password,
+                                expression: "form.password"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.form.errors.has("password")
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "password",
+                              placeholder:
+                                "Password (leave empty if not changing)"
+                            },
+                            domProps: { value: _vm.form.password },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.form,
+                                  "password",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _c("has-error", {
+                            attrs: { form: _vm.form, field: "password" }
+                          })
+                        ],
+                        1
+                      )
+                    ]),
                     _vm._v(" "),
-                    _vm._m(5)
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "offset-sm-2 col-sm-10" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-success",
+                            attrs: { type: "submit" },
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                return _vm.updateProfile($event)
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                            Update\n                                        "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
                   ])
                 ]
               )
@@ -61443,11 +61763,15 @@ var staticRenderFns = [
       _c("div", { staticClass: "card card-widget widget-user" }, [
         _c("div", { staticClass: "widget-user-header text-white" }, [
           _c("h3", { staticClass: "widget-user-username text-right" }, [
-            _vm._v("Elizabeth Pierce")
+            _vm._v(
+              "\n                        Elizabeth Pierce\n                    "
+            )
           ]),
           _vm._v(" "),
           _c("h5", { staticClass: "widget-user-desc text-right" }, [
-            _vm._v("Web Designer")
+            _vm._v(
+              "\n                        Web Designer\n                    "
+            )
           ])
         ]),
         _vm._v(" "),
@@ -61551,13 +61875,15 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("span", { staticClass: "description" }, [
-            _vm._v("Shared publicly - 7:30 PM today")
+            _vm._v(
+              "Shared publicly - 7:30 PM\n                                        today"
+            )
           ])
         ]),
         _vm._v(" "),
         _c("p", [
           _vm._v(
-            "\n                  Lorem ipsum represents a long-held\n                  tradition for designers, typographers\n                  and the like. Some people hate it and\n                  argue for its demise, but others ignore\n                  the hate as they create awesome tools to\n                  help create filler text for everyone\n                  from bacon lovers to Charlie Sheen fans.\n                "
+            "\n                                    Lorem ipsum represents a long-held\n                                    tradition for designers, typographers\n                                    and the like. Some people hate it and\n                                    argue for its demise, but others ignore\n                                    the hate as they create awesome tools to\n                                    help create filler text for everyone\n                                    from bacon lovers to Charlie Sheen fans.\n                                "
           )
         ]),
         _vm._v(" "),
@@ -61567,13 +61893,17 @@ var staticRenderFns = [
             { staticClass: "link-black text-sm mr-2", attrs: { href: "#" } },
             [
               _c("i", { staticClass: "fas fa-share mr-1" }),
-              _vm._v("\n                    Share\n                  ")
+              _vm._v(
+                "\n                                        Share\n                                    "
+              )
             ]
           ),
           _vm._v(" "),
           _c("a", { staticClass: "link-black text-sm", attrs: { href: "#" } }, [
             _c("i", { staticClass: "far fa-thumbs-up mr-1" }),
-            _vm._v("\n                    Like\n                  ")
+            _vm._v(
+              "\n                                        Like\n                                    "
+            )
           ]),
           _vm._v(" "),
           _c("span", { staticClass: "float-right" }, [
@@ -61582,7 +61912,7 @@ var staticRenderFns = [
               { staticClass: "link-black text-sm", attrs: { href: "#" } },
               [
                 _c("i", { staticClass: "far fa-comments mr-1" }),
-                _vm._v("Comments (5)\n                    ")
+                _vm._v("Comments (5)\n                                        ")
               ]
             )
           ])
@@ -61592,65 +61922,6 @@ var staticRenderFns = [
           staticClass: "form-control form-control-sm",
           attrs: { type: "text", placeholder: "Type a comment" }
         })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        {
-          staticClass: "col-sm-2 col-form-label",
-          attrs: { for: "experience" }
-        },
-        [_vm._v("Experience")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-10" }, [
-        _c("textarea", {
-          staticClass: "form-control",
-          attrs: { type: "text", id: "experience", placeholder: "Experience" }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c(
-        "label",
-        { staticClass: "col-sm-2 col-form-label", attrs: { for: "passsport" } },
-        [_vm._v("Passport")]
-      ),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-sm-10" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            id: "passport",
-            placeholder: "Passport (leave empty if not changing)"
-          }
-        })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group row" }, [
-      _c("div", { staticClass: "offset-sm-2 col-sm-10" }, [
-        _c(
-          "button",
-          { staticClass: "btn btn-success", attrs: { type: "submit" } },
-          [_vm._v("Update")]
-        )
       ])
     ])
   }
@@ -61688,7 +61959,9 @@ var render = function() {
                 "button",
                 { staticClass: "btn btn-success", on: { click: _vm.newModal } },
                 [
-                  _vm._v("\n              Add New\n              "),
+                  _vm._v(
+                    "\n                            Add New\n                            "
+                  ),
                   _c("i", { staticClass: "fas fa-user-plus" })
                 ]
               )
@@ -61783,7 +62056,11 @@ var render = function() {
                         staticClass: "modal-title",
                         attrs: { id: "addNewLabel" }
                       },
-                      [_vm._v("Add New")]
+                      [
+                        _vm._v(
+                          "\n                        Add New\n                    "
+                        )
+                      ]
                     )
                   : _vm.editMode
                   ? _c(
@@ -61792,7 +62069,11 @@ var render = function() {
                         staticClass: "modal-title",
                         attrs: { id: "addNewLabel" }
                       },
-                      [_vm._v("Update User's Info")]
+                      [
+                        _vm._v(
+                          "\n                        Update User's Info\n                    "
+                        )
+                      ]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -61825,7 +62106,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          class: { "is-invalid": _vm.form.errors.has("name") },
+                          class: {
+                            "is-invalid": _vm.form.errors.has("name")
+                          },
                           attrs: {
                             type: "text",
                             name: "name",
@@ -61864,7 +62147,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          class: { "is-invalid": _vm.form.errors.has("email") },
+                          class: {
+                            "is-invalid": _vm.form.errors.has("email")
+                          },
                           attrs: {
                             type: "email",
                             name: "email",
@@ -61903,7 +62188,9 @@ var render = function() {
                             }
                           ],
                           staticClass: "form-control",
-                          class: { "is-invalid": _vm.form.errors.has("bio") },
+                          class: {
+                            "is-invalid": _vm.form.errors.has("bio")
+                          },
                           attrs: {
                             name: "bio",
                             id: "bio",
@@ -62046,7 +62333,11 @@ var render = function() {
                         staticClass: "btn btn-danger",
                         attrs: { type: "button", "data-dismiss": "modal" }
                       },
-                      [_vm._v("Close")]
+                      [
+                        _vm._v(
+                          "\n                            Close\n                        "
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _vm.editMode
@@ -62056,7 +62347,11 @@ var render = function() {
                             staticClass: "btn btn-success",
                             attrs: { type: "submit" }
                           },
-                          [_vm._v("Update")]
+                          [
+                            _vm._v(
+                              "\n                            Update\n                        "
+                            )
+                          ]
                         )
                       : !_vm.editMode
                       ? _c(
@@ -62065,7 +62360,11 @@ var render = function() {
                             staticClass: "btn btn-primary",
                             attrs: { type: "submit" }
                           },
-                          [_vm._v("Create")]
+                          [
+                            _vm._v(
+                              "\n                            Create\n                        "
+                            )
+                          ]
                         )
                       : _vm._e()
                   ])
