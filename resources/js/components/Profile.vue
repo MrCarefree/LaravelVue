@@ -13,7 +13,7 @@
                         </h5>
                     </div>
                     <div class="widget-user-image">
-                        <img class="img-circle" src alt="User Avatar" />
+                        <img class="img-circle" :src="currentPhoto" alt="User Avatar" />
                     </div>
                     <div class="card-footer">
                         <div class="row">
@@ -309,7 +309,9 @@
 <script>
 export default {
     data() {
+        
         return {
+            currentPhoto: "",
             form: new Form({
                 id: "",
                 name: "",
@@ -323,6 +325,13 @@ export default {
     },
 
     methods: {
+        loadUsers() {
+            axios.get("api/profile").then(({ data }) => {
+                this.form.fill(data);
+                this.currentPhoto = 'img/profile/'+data.photo;
+            });
+        },
+
         updatePhoto(e) {
             let file = e.target.files[0];
             let reader = new FileReader();
@@ -349,6 +358,12 @@ export default {
                 .put("api/profile")
                 .then(() => {
                     this.$Progress.finish();
+                    Toast.fire({
+                        icon: "success",
+                        title: "Profile has been updated"
+                    });
+                    bsCustomFileInput.destroy();
+                    Fire.$emit("AfterRequest");
                 })
                 .catch(() => {
                     this.$Progress.fail();
@@ -357,7 +372,10 @@ export default {
     },
 
     mounted() {
-        axios.get("api/profile").then(({ data }) => this.form.fill(data));
+        this.loadUsers();
+        Fire.$on("AfterRequest", () => {
+            this.loadUsers();
+        });
     }
 };
 </script>
